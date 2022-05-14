@@ -30,7 +30,6 @@ describe('Store Test', function(){
       })
     });
   
-
     it('Place order', function(){
       cy.log(String(apiEndpoint))
       cy.request({
@@ -80,6 +79,22 @@ describe('Store Test', function(){
       })
     });
 
-    
+    it('Delete order id=1 ', function(){
+      cy.log(String(apiEndpoint))
+      var id_pet = '1'
+      cy.request({
+        'method' : 'DELETE',
+        'url'    : String(apiEndpoint +'order/' + id_pet),
+      })
+      .then((resp)=>{
+        expect(resp.status).to.eq(200)
+        expect(resp.body).to.have.property('code',200)
+        expect(resp.body).to.have.property('type','unknown')
+        expect(resp.body).to.have.property('message',1) 
+        this.order = resp.body       
+        cy.log(String(JSON.stringify(this.order)))
+
+      })
+    }); 
   });
   
